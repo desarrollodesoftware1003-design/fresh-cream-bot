@@ -39,6 +39,13 @@ app.get('/webhook', (req, res) => {
     const token = req.query['hub.verify_token'];
     const challenge = req.query['hub.challenge'];
 
+    console.log('VERIFICACION META:', {
+        mode,
+        hayToken: !!token,
+        tokenCoincide: token === process.env.VERIFY_TOKEN,
+        hayChallenge: !!challenge
+    });
+
     if (
         mode === 'subscribe' &&
         token === process.env.VERIFY_TOKEN
