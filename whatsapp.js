@@ -9,10 +9,6 @@ async function sendMessage(destinatario, text, esBSUID = false) {
         type: 'text',
         text: { body: text }
     };
-
-    // Si el cliente tiene nombre de usuario activado, no hay número de teléfono,
-    // se manda usando el identificador BSUID en el campo "recipient".
-    // Si sí hay número normal, se usa el campo "to" de siempre.
     if (esBSUID) {
         payload.recipient = destinatario;
     } else {
@@ -34,8 +30,6 @@ async function sendMessage(destinatario, text, esBSUID = false) {
     } catch (error) {
         console.error('Error al enviar mensaje:', error.response?.data || error.message);
 
-        // Si falla el envío por BSUID (porque tu cuenta aún no tiene esa función habilitada
-        // en tu país), lo avisamos claramente en consola para saberlo rápido.
         if (esBSUID) {
             console.error('⚠️ El envío por BSUID pudo fallar porque tu cuenta de WhatsApp Business aún no tiene habilitado el envío a usuarios con nombre de usuario (función en despliegue gradual de Meta).');
         }
